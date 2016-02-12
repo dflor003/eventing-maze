@@ -1,0 +1,13 @@
+<pre id="output">
+</pre>
+
+<script type="text/javascript" src="/app/maze-generator.js"></script>
+<script type="text/javascript">
+    (function () {
+        var maze = app.maze(8, 11),
+                rendered = app.display(maze);
+
+        var element = document.getElementById('output');
+        element.innerHTML = rendered;
+    })();
+</script>
