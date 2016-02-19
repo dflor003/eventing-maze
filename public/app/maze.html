@@ -6,7 +6,7 @@
 <!--<canvas id="canvas"></canvas>-->
 <div id="main" class="container-fluid">
     <div class="row">
-        <div id="maze-container" class="col-md-8 col-md-offset-2">
+        <div id="maze-container" class="col-md-12">
 
         </div>
     </div>
@@ -21,11 +21,13 @@
 <script type="text/javascript" src="/app/maze-renderer.js"></script>
 <script type="text/javascript">
     $(function () {
-        var maze = app.generateMaze(20, 20);
+        var maze = app.generateMaze(20, 18);
 
         var $main = $('#maze-container');
-        var runner = app.renderMaze($main[0], maze);
-        runner.start();
+        app.loadAssets(function () {
+            var runner = app.renderMaze($main[0], maze);
+            runner.start();
+        });
 
 //        var element = document.getElementById('canvas');
 //        app.renderMaze(element, maze);

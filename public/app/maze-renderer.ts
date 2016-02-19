@@ -4,8 +4,20 @@ namespace app {
     import Container = PIXI.Container;
     import Graphics = PIXI.Graphics;
     import Text = PIXI.Text;
+    import Rectangle = PIXI.Rectangle;
+    import Texture = PIXI.Texture;
+    import Sprite = PIXI.Sprite;
 
+    let TextureCache = PIXI.utils.TextureCache;
     const Debug = false;
+
+    export function loadAssets(done: () => void): void {
+        PIXI.loader
+            .add([
+                'assets/player.png'
+            ])
+            .load(done);
+    }
 
     export function renderMaze(element: HTMLElement, maze: Maze): GameManager {
         // Setup and configure the PIXI renderer
@@ -18,8 +30,21 @@ namespace app {
         renderer.backgroundColor = 0xFFF;
         $element.append(renderer.view);
 
-        let mazeView = new MazeView(maze);
-        return new GameManager(renderer, mazeView);
+        let scene = new Container(),
+            mazeView = new MazeView(maze),
+            player = new PlayerView();
+
+        scene.addChild(mazeView);
+        scene.addChild(player);
+        let centerX = maze.width / 2,
+            centerY = maze.height / 2,
+            centerCell = mazeView.cellViewAt(centerX, centerY),
+            centerPos = centerCell.getGlobalPosition(undefined);
+
+        player.x = centerPos.x + (player.width / 4);
+        player.y = centerPos.y;
+
+        return new GameManager(renderer, scene);
     }
 
     export class GameManager {
@@ -54,10 +79,11 @@ namespace app {
     }
 
     export class MazeView extends Container {
-        private pixelsPerCell = 40;
+        private pixelsPerCell = 48;
         private marginX = 10;
         private marginY = 10;
         private maze: Maze;
+        private viewByMazePosition: MazeCellView[][] = [];
 
         constructor(maze: Maze) {
             super();
@@ -75,6 +101,7 @@ namespace app {
 
             for (let row = 0; row < maze.height; row++) {
                 currentX = marginX;
+                let rowCells = [];
                 for (let col = 0; col < maze.width; col++) {
                     let cell = maze.getCell(col, row),
                         cellView = new MazeCellView(cell, pixelsPerCell);
@@ -83,12 +110,18 @@ namespace app {
                     cellView.y = currentY;
 
                     this.addChild(cellView);
+                    rowCells.push(cellView);
 
                     currentX += pixelsPerCell;
                 }
 
+                this.viewByMazePosition.push(rowCells);
                 currentY += pixelsPerCell;
             }
+        }
+
+        cellViewAt(x: number, y: number): MazeCellView {
+            return this.viewByMazePosition[y][x];
         }
     }
 
@@ -141,13 +174,28 @@ namespace app {
     }
 
     export class PlayerView extends Container {
+        private texturesByDirection: { [key: string]: Texture[]; } = {};
+
         constructor() {
             super();
             this.build();
         }
 
         build(): void {
+            let framesPerAnim = 4,
+                directions = 4,
+                width = 128,
+                height = 192,
+                cellWidth = width / framesPerAnim,
+                cellHeight = height / directions,
+                texture = TextureCache['assets/player.png'],
+                rect1 = new Rectangle(0, 0, cellWidth, cellHeight);
 
+            texture.frame = rect1;
+            let sprite = new Sprite(texture);
+            sprite.x = 0;
+            sprite.y = 0;
+            this.addChild(sprite);
         }
     }
 }
