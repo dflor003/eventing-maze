@@ -1,0 +1,24 @@
+{
+  "name": "eventing-maze",
+  "description": "A maze game to play around with some EventSourcing + CQRS.",
+  "main": "index.js",
+  "authors": [
+    "Danil Flores <dflor003@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/dflor003/eventing-maze",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pixi.js": "pixi#^3.0.9",
+    "bootstrap": "^3.3.6"
+  }
+}

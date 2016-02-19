@@ -40,3 +40,5 @@ node_modules
 /public/app/**/*.js
 /public/app/**/*.js.map
 /typings
+
+/public/lib

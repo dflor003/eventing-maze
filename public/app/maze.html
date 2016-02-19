@@ -1,13 +1,33 @@
-<pre id="output">
-</pre>
+<style type="text/css">
+    #maze-container {
+        min-height: 100vh;
+    }
+</style>
+<!--<canvas id="canvas"></canvas>-->
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div id="maze-container" class="col-md-8 col-md-offset-2">
 
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="/lib/pixi.js/bin/pixi.js"></script>
+
+<script type="text/javascript" src="/app/drawing.js"></script>
 <script type="text/javascript" src="/app/maze-generator.js"></script>
+<script type="text/javascript" src="/app/maze-renderer.js"></script>
 <script type="text/javascript">
-    (function () {
-        var maze = app.maze(8, 11),
-                rendered = app.display(maze);
+    $(function () {
+        var maze = app.generateMaze(20, 20);
 
-        var element = document.getElementById('output');
-        element.innerHTML = rendered;
-    })();
+        var $main = $('#maze-container');
+        var runner = app.renderMaze($main[0], maze);
+        runner.start();
+
+//        var element = document.getElementById('canvas');
+//        app.renderMaze(element, maze);
+    });
 </script>
