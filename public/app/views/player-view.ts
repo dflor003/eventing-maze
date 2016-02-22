@@ -13,9 +13,9 @@ namespace app.views {
 
     export class PlayerView extends Container {
         private maze: MazeView;
-        private mazeX = 0;
-        private mazeY = 0;
         private path: Direction[] = [];
+        private mazePosition = Vector2D.empty();
+        private maxVelocity = new Vector2D(5, 5);
         private actions: InterpolationFunction<PlayerView>[] = [];
         private acceleration: Vector2D = Vector2D.empty();
         private velocity: Vector2D = Vector2D.empty();
@@ -49,18 +49,16 @@ namespace app.views {
                 centerCell = maze.cellViewAt(centerX, centerY),
                 centerPos = centerCell.getGlobalPosition(undefined);
 
-            this.mazeX = centerX;
-            this.mazeY = centerY;
+            this.mazePosition = new Vector2D(centerX, centerY);
             this.x = centerPos.x + (this.width / 4);
             this.y = centerPos.y;
         }
 
         move(direction: Direction): void {
-
-            let cellInDirection = this.maze.cellViewInDirection(this.mazeX, this.mazeY, direction);
-            if (!cellInDirection || cellInDirection.hasWall(direction.opposite())) {
-                return Utils.debug(`Tried to move into wall ${direction}`);
-            }
+            //let cellInDirection = this.maze.cellViewInDirection(this.mazeX, this.mazeY, direction);
+            //if (!cellInDirection || cellInDirection.hasWall(direction.opposite())) {
+            //    return Utils.debug(`Tried to move into wall ${direction}`);
+            //}
 
             Utils.debug(`Player move event ${direction}`);
             this.path.push(direction);
@@ -71,12 +69,20 @@ namespace app.views {
                 return;
             }
 
-            let direction = this.path.shift(),
-                moveVector = direction.scale(20);
+            let target = this.path.shift(),
+                currentX = this.mazePosition.x,
+                currentY = this.mazePosition.y,
+                cellInDirection = this.maze.cellViewInDirection(currentX, currentY, target);
 
-            Utils.debug(`Player update moving in direction ${direction}`)
-            this.x += moveVector.x;
-            this.y += moveVector.y;
+            if (!cellInDirection || cellInDirection.hasWall(target.opposite())) {
+                return Utils.debug(`Tried to move in direction ${target} but there was a wall!`);
+            }
+
+            Utils.debug(`Player update moving in direction ${target}`);
+            let center = cellInDirection.position;
+            this.x = center.x + (this.width / 4);
+            this.y = center.y;
+            this.mazePosition = new Vector2D(cellInDirection.mazePosition.x, cellInDirection.mazePosition.y);
         }
     }
 }

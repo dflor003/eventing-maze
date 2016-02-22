@@ -18,6 +18,27 @@ namespace app.common {
                 console.log.apply(console, arguments);
             }
         }
+
+        static clamp(value: number, min: number, max: number): number {
+            if (value <= min) {
+                return min;
+            }
+
+            if (value >= max) {
+                return max;
+            }
+
+            return value;
+        }
+
+        static getAngle(x: number, y: number): number {
+            return Math.atan2(y, x);
+        }
+
+        static toDegrees(rads: number): number {
+            Args.notNull(rads, 'rads');
+            return rads * (180 / Math.PI);
+        }
     }
 
     export class Args {

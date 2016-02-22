@@ -57,19 +57,22 @@ namespace app.views {
         }
 
         cellViewAt(x: number, y: number): MazeCellView {
-            return this.viewByMazePosition[y][x];
+            let cols = this.viewByMazePosition[y];
+            return cols ? cols[x] : null;
         }
 
         cellViewInDirection(currentX: number, currentY: number, direction: Direction): MazeCellView {
-            switch (direction) {
-                case Direction.Up:
-                    return this.cellViewAt(currentX, currentY - 1);
-                case Direction.Down:
-                    return this.cellViewAt(currentX, currentY + 1);
-                case Direction.Left:
-                    return this.cellViewAt(currentX - 1, currentY);
-                case Direction.Right:
-                    return this.cellViewAt(currentX + 1, currentY);
+            if (direction.equals(Direction.Up)) {
+                return this.cellViewAt(currentX, currentY - 1);
+            }
+            if (direction.equals(Direction.Down)) {
+                return this.cellViewAt(currentX, currentY + 1);
+            }
+            if (direction.equals(Direction.Left)) {
+                return this.cellViewAt(currentX - 1, currentY);
+            }
+            if (direction.equals(Direction.Right)) {
+                return this.cellViewAt(currentX + 1, currentY);
             }
 
             throw new Error('Invalid direction');
@@ -87,12 +90,21 @@ namespace app.views {
             this.build();
         }
 
+
+        get mazePosition(): Vector2D {
+            return this.cell.position;
+        }
+
         hasWall(direction: Direction): boolean {
             return this.cell.hasWall(direction);
         }
 
-        get mazePosition(): Vector2D {
-            return this.cell.position;
+        getCenter(): Vector2D {
+            let globalPosition = this.getGlobalPosition(undefined),
+                centerX = globalPosition.x + (this.width / 2),
+                centerY = globalPosition.y + (this.height / 2);
+
+            return new Vector2D(centerX, centerY);
         }
 
         private build(): void {
