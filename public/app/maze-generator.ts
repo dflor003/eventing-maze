@@ -21,8 +21,8 @@ namespace app {
             this.walls[Direction.Right.toString()] = true;
         }
 
-        get position(): Point {
-            return new Point(this.x, this.y);
+        get position(): Vector2D {
+            return new Vector2D(this.x, this.y);
         }
 
         getX(): number {
