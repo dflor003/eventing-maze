@@ -18,7 +18,7 @@ function start(workingDir?: string): void {
     app.set('view engine', 'jade');
 
     // Configuration
-    //app.use(favicon(workingDir + '/public/images/favicon.ico'));
+    app.use(favicon(workingDir + '/public/assets/favicon.ico'));
     app.use(logger('dev'));
     app.use(require('less-middleware')(path.join(workingDir, 'public'), {
         force: true,
