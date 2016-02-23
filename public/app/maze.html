@@ -16,28 +16,15 @@
 <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script type="text/javascript" src="/lib/pixi.js/bin/pixi.js"></script>
 
-<script type="text/javascript" src="/app/common/utils.js"></script>
-<script type="text/javascript" src="/app/common/vector-2d.js"></script>
-<script type="text/javascript" src="/app/common/direction.js"></script>
-<script type="text/javascript" src="/app/common/event-bus.js"></script>
-<script type="text/javascript" src="/app/models/maze.js"></script>
-<script type="text/javascript" src="/app/views/maze-view.js"></script>
-<script type="text/javascript" src="/app/views/player-view.js"></script>
-<script type="text/javascript" src="/app/keyboard.js"></script>
-<script type="text/javascript" src="/app/game-manager.js"></script>
-<script type="text/javascript" src="/app/maze-generator.js"></script>
-<script type="text/javascript" src="/app/maze-renderer.js"></script>
-<script type="text/javascript">
-    $(function () {
-        var maze = app.generateMaze(20, 18);
-
-        var $main = $('#maze-container');
-        app.loadAssets(function () {
-            var runner = app.renderMaze($main[0], maze);
-            runner.start();
-        });
-
-//        var element = document.getElementById('canvas');
-//        app.renderMaze(element, maze);
-    });
-</script>
+<!--<script type="text/javascript" src="/app/common/utils.js"></script>-->
+<!--<script type="text/javascript" src="/app/common/vector-2d.js"></script>-->
+<!--<script type="text/javascript" src="/app/common/direction.js"></script>-->
+<!--<script type="text/javascript" src="/app/common/event-bus.js"></script>-->
+<!--<script type="text/javascript" src="/app/models/maze.js"></script>-->
+<!--<script type="text/javascript" src="/app/views/maze-view.js"></script>-->
+<!--<script type="text/javascript" src="/app/views/player-view.js"></script>-->
+<!--<script type="text/javascript" src="/app/keyboard.js"></script>-->
+<!--<script type="text/javascript" src="/app/game-manager.js"></script>-->
+<!--<script type="text/javascript" src="/app/maze-generator.js"></script>-->
+<!--<script type="text/javascript" src="/app/maze-renderer.js"></script>-->
+<script type="text/javascript" src="/bundles/app.js"></script>

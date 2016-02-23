@@ -6,6 +6,7 @@ import * as logger from 'morgan';
 import * as debug from 'debug';
 import * as http from 'http';
 import {Request, Response} from 'express';
+import * as browserify from 'browserify-middleware';
 
 function start(workingDir?: string): void {
     // Setup
@@ -25,6 +26,11 @@ function start(workingDir?: string): void {
         debug: true,
     }));
     app.use(express.static(path.join(workingDir, 'public')));
+    app.get('/bundles/app.js', browserify(path.join(workingDir, 'public/app/main.js'), {
+        transform: [
+            ['babelify', {presets: ['es2015']}]
+        ]
+    }));
 
     // Routes
     app.get('/', (req: Request, res: Response) => res.render('layout', {}));

@@ -41,5 +41,6 @@ node_modules
 /public/app/**/*.js.map
 /typings
 !/typings/tsd.d.ts
+!/typings/custom/*.d.ts
 
 /public/lib

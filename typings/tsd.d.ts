@@ -7,3 +7,4 @@
 /// <reference path="pixi.js/pixi.js.d.ts" />
 /// <reference path="serve-favicon/serve-favicon.d.ts" />
 /// <reference path="serve-static/serve-static.d.ts" />
+/// <reference path="browserify/browserify.d.ts" />

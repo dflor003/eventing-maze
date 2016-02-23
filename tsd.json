@@ -31,6 +31,9 @@
     },
     "pixi.js/pixi.js.d.ts": {
       "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
+    },
+    "browserify/browserify.d.ts": {
+      "commit": "bd269cad4cb2b495f940c7b6afc5825d568029be"
     }
   }
 }

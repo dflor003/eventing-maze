@@ -1,46 +1,47 @@
-namespace app.common {
-    export class Direction extends Vector2D{
-        static Up = new Direction(0, -1);
-        static Down = new Direction(0, 1);
-        static Left = new Direction(-1, 0);
-        static Right = new Direction(1, 0);
+import {Vector2D} from './vector-2d';
+import {Utils} from './utils';
 
-        private _angle: number;
+export class Direction extends Vector2D{
+    static Up = new Direction(0, -1);
+    static Down = new Direction(0, 1);
+    static Left = new Direction(-1, 0);
+    static Right = new Direction(1, 0);
 
-        constructor(x: number, y: number) {
-            super(Utils.clamp(x, -1, 1), Utils.clamp(y, -1, 1));
-            this._angle = Utils.getAngle(this.x, this.y);
-        }
+    private _angle: number;
 
-        static getDirectionTo(from: Vector2D, to: Vector2D): Direction {
-            let diff = Vector2D.subtract(to, from);
-            return new Direction(diff.x, diff.y);
-        }
+    constructor(x: number, y: number) {
+        super(Utils.clamp(x, -1, 1), Utils.clamp(y, -1, 1));
+        this._angle = Utils.getAngle(this.x, this.y);
+    }
 
-        get angleRads(): number {
-            return this._angle;
-        }
+    static getDirectionTo(from: Vector2D, to: Vector2D): Direction {
+        let diff = Vector2D.subtract(to, from);
+        return new Direction(diff.x, diff.y);
+    }
 
-        get angleDegrees(): number {
-            return Utils.toDegrees(this._angle);
-        }
+    get angleRads(): number {
+        return this._angle;
+    }
 
-        name(): string {
-            let degrees = this.angleDegrees;
-            if (degrees === 0) return 'Right';
-            if (degrees === -90) return 'Up';
-            if (Math.abs(degrees) === 180) return 'Left';
-            if (degrees === 90) return 'Down';
+    get angleDegrees(): number {
+        return Utils.toDegrees(this._angle);
+    }
 
-            return degrees.toFixed(2);
-        }
+    name(): string {
+        let degrees = this.angleDegrees;
+        if (degrees === 0) return 'Right';
+        if (degrees === -90) return 'Up';
+        if (Math.abs(degrees) === 180) return 'Left';
+        if (degrees === 90) return 'Down';
 
-        opposite(): Direction {
-            return new Direction(-this.x, -this.y);
-        }
+        return degrees.toFixed(2);
+    }
 
-        toString(): string {
-            return this.name();
-        }
+    opposite(): Direction {
+        return new Direction(-this.x, -this.y);
+    }
+
+    toString(): string {
+        return this.name();
     }
 }

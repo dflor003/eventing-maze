@@ -1,28 +1,28 @@
-namespace app.common {
-    export class EventBus {
-        private static _instance = new EventBus();
-        private callbacks = {};
+import {Utils} from './utils';
 
-        static get instance(): EventBus {
-            return EventBus._instance;
-        }
+export class EventBus {
+    private static _instance = new EventBus();
+    private callbacks = {};
 
-        on(event: string, handler: Function): EventBus {
-            let callback = this.getCallbackFor(event);
-            callback.add(handler);
-            return this;
-        }
+    static get instance(): EventBus {
+        return EventBus._instance;
+    }
 
-        emit(event: string, payload: any): EventBus {
-            Utils.debug(`Emitting event '${event}'`, payload);
+    on(event: string, handler: Function): EventBus {
+        let callback = this.getCallbackFor(event);
+        callback.add(handler);
+        return this;
+    }
 
-            let callback = this.getCallbackFor(event);
-            callback.fire(payload);
-            return this;
-        }
+    emit(event: string, payload: any): EventBus {
+        Utils.debug(`Emitting event '${event}'`, payload);
 
-        private getCallbackFor(event: string): JQueryCallback {
-            return this.callbacks[event] || (this.callbacks[event] = $.Callbacks('unique'));
-        }
+        let callback = this.getCallbackFor(event);
+        callback.fire(payload);
+        return this;
+    }
+
+    private getCallbackFor(event: string): JQueryCallback {
+        return this.callbacks[event] || (this.callbacks[event] = $.Callbacks('unique'));
     }
 }
