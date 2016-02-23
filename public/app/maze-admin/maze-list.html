@@ -1,0 +1,26 @@
+<form>
+    <fieldset>
+        <legend>Mazes</legend>
+        <hr />
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p class="text-muted" ng-if="!ctrl.mazes.length">
+                    Looks like there are no mazes running right now... How about you <a href="#/mazes/new">start one</a>!
+                </p>
+
+                <div class="list-group" ng-if="ctrl.mazes.length">
+                    <a href="#/mazes/{{maze.id}}" class="list-group-item" ng-repeat="maze in ctrl.mazes">
+                        <strong>{{maze.name}}</strong>
+                        <small>{{maze.width}} &times; {{maze.height}}</small>
+                    </a>
+                </div>
+                <hr />
+            </div>
+        </div>
+
+        <a href="#/mazes/new" class="btn btn-block btn-primary" autofocus>
+            Create a maze
+        </a>
+    </fieldset>
+</form>

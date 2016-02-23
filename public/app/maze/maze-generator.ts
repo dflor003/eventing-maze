@@ -62,7 +62,7 @@ export function generateMaze(id: string, name: string, width: number, height: nu
         }
     }
 
-    // Merge all cells with adjacent cells that are of different sets
+    // For last row, merge all cells with adjacent cells that are of different sets
     for (let col = 0; col < width - 1; col++) {
         let current = maze.getCell(col, height - 1),
             next = maze.getCell(col + 1, height - 1);

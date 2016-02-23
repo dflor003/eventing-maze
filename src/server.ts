@@ -21,6 +21,7 @@ function start(workingDir?: string): void {
     app.set('view engine', 'jade');
 
     // Configuration
+    app.disable('etag');
     app.use(favicon(workingDir + '/public/assets/favicon.ico'));
     app.use(logger('dev'));
     app.use(require('less-middleware')(path.join(workingDir, 'public'), {
@@ -28,10 +29,15 @@ function start(workingDir?: string): void {
         debug: true,
     }));
     app.use(bodyParser.json());
-    app.use(express.static(path.join(workingDir, 'public')));
+    app.use(express.static(path.join(workingDir, 'public'), { etag: true }));
 
-    // JS Bundle
-    app.get('/bundles/app.js', browserify(path.join(workingDir, 'public/app/maze/main.js'), {
+    // JS Bundles
+    app.get('/bundles/maze.js', browserify(path.join(workingDir, 'public/app/maze/main.js'), {
+        transform: [
+            ['babelify', {presets: ['es2015']}]
+        ]
+    }));
+    app.get('/bundles/app.js', browserify(path.join(workingDir, 'public/app/app.js'), {
         transform: [
             ['babelify', {presets: ['es2015']}]
         ]

@@ -9,3 +9,5 @@
 /// <reference path="serve-static/serve-static.d.ts" />
 /// <reference path="browserify/browserify.d.ts" />
 /// <reference path="body-parser/body-parser.d.ts" />
+/// <reference path="angularjs/angular.d.ts" />
+/// <reference path="angularjs/angular-route.d.ts" />

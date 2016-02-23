@@ -1,0 +1,39 @@
+<form class="form-horizontal" name="form" ng-submit="ctrl.save()">
+    <fieldset>
+        <legend>
+            Create a maze
+        </legend>
+
+        <div class="form-group">
+            <label for="maze-name" class="col-sm-2 control-label">Maze Name</label>
+            <div class="col-sm-10">
+                <input type="text" id="maze-name" name="name" class="form-control" ng-model="ctrl.name" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="maze-width" class="col-sm-2 control-label">Width</label>
+            <div class="col-sm-10">
+                <input type="number" id="maze-width" name="width" class="form-control" ng-model="ctrl.width" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="maze-height" class="col-sm-2 control-label">Height</label>
+            <div class="col-sm-10">
+                <input type="number" id="maze-height" name="height" class="form-control" ng-model="ctrl.height" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+                    Create
+                </button>
+                <a href="#/mazes" class="btn btn-default">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </fieldset>
+</form>

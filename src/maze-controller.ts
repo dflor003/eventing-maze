@@ -56,7 +56,8 @@ export class MazeController {
         let mazes = this.storage.getAll().map(maze => ({
             id: maze.id,
             width: maze.width,
-            height: maze.height
+            height: maze.height,
+            name: maze.name,
         }));
         res.json(mazes);
     }

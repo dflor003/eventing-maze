@@ -19,6 +19,9 @@
   ],
   "dependencies": {
     "pixi.js": "pixi#^3.0.9",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "angular-route": "~1.5.0",
+    "angular-bootstrap": "~1.1.2",
+    "bootswatch-dist": "sandstone"
   }
 }
