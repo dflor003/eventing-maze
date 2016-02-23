@@ -6,13 +6,13 @@ export class Utils {
         return typeof val === 'undefined' || val === null;
     }
 
-    static debug(...args:any[]) {
+    static debug(...args: any[]) {
         if (Utils.ShowDebug && console && typeof console.debug === 'function') {
             console.debug.apply(console, arguments);
         }
     }
 
-    static log(...args:any[]) {
+    static log(...args: any[]) {
         if (Utils.ShowLog && console && typeof console.log === 'function') {
             console.log.apply(console, arguments);
         }
@@ -37,6 +37,26 @@ export class Utils {
     static toDegrees(rads: number): number {
         Args.notNull(rads, 'rads');
         return rads * (180 / Math.PI);
+    }
+
+    static randInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+}
+
+export class IdGenerator {
+    private static idChars = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
+    private static numChars = 5;
+
+    static nextId(): string {
+        let result = '',
+            chars = IdGenerator.idChars;
+
+        for (let i = 0; i < IdGenerator.numChars; i++) {
+            result += chars[Utils.randInt(0, chars.length)];
+        }
+
+        return result;
     }
 }
 

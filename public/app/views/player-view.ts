@@ -44,8 +44,8 @@ export class PlayerView extends Container {
         this.addChild(sprite);
 
         let maze = this.maze,
-            centerX = maze.mazeWidth / 2,
-            centerY = maze.mazeHeight / 2,
+            centerX = Math.floor(maze.mazeWidth / 2),
+            centerY = Math.floor(maze.mazeHeight / 2),
             centerCell = maze.cellViewAt(centerX, centerY),
             centerPos = centerCell.getGlobalPosition(undefined);
 

@@ -7,6 +7,8 @@ import * as debug from 'debug';
 import * as http from 'http';
 import {Request, Response} from 'express';
 import * as browserify from 'browserify-middleware';
+import * as bodyParser from 'body-parser';
+import {MazeController} from "./maze-controller";
 
 function start(workingDir?: string): void {
     // Setup
@@ -25,7 +27,10 @@ function start(workingDir?: string): void {
         force: true,
         debug: true,
     }));
+    app.use(bodyParser.json());
     app.use(express.static(path.join(workingDir, 'public')));
+
+    // JS Bundle
     app.get('/bundles/app.js', browserify(path.join(workingDir, 'public/app/main.js'), {
         transform: [
             ['babelify', {presets: ['es2015']}]
@@ -34,6 +39,11 @@ function start(workingDir?: string): void {
 
     // Routes
     app.get('/', (req: Request, res: Response) => res.render('layout', {}));
+
+    let mazeController = new MazeController();
+    app.get('/api/mazes/:id', (req: Request, res: Response, next: Function) => mazeController.getMaze(req, res, next));
+    app.get('/api/mazes', (req: Request, res: Response, next: Function) => mazeController.getAll(req, res, next));
+    app.post('/api/mazes', (req: Request, res: Response, next: Function) => mazeController.newMaze(req, res, next));
 
     // Error handlers
     app.use((req: Request, res: Response, next: Function) => {

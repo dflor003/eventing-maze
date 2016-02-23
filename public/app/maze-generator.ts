@@ -1,10 +1,16 @@
+'use strict';
 import {Maze, MazeCell} from './models/maze';
+import {Utils} from './common/utils';
 
-export function generateMaze(width: number, height: number): Maze {
+export function generateMaze(id: string, name: string, width: number, height: number): Maze {
     const MergeHorizontalChance = 0.50;
     const MergeVerticalChance = 0.3;
-    let maze = new Maze(width, height),
-        randInt = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+    let maze = new Maze({
+        id: id,
+        name: name,
+        width: width,
+        height: height
+    });
 
     // Iterate every row but the last
     for (let row = 0; row < height - 1; row++) {
@@ -41,7 +47,7 @@ export function generateMaze(width: number, height: number): Maze {
                 stop = false;
 
             while (!stop) {
-                let randomIndex = randInt(0, cells.length),
+                let randomIndex = Utils.randInt(0, cells.length),
                     randomCell = cells[randomIndex],
                     cellUnder = maze.getCell(randomCell.getX(), nextRow);
 

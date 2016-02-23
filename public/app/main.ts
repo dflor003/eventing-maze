@@ -1,8 +1,8 @@
 import {generateMaze} from './maze-generator';
-import {loadAssets, renderMaze} from "./maze-renderer";
+import {loadAssets, renderMaze} from './maze-renderer';
 
 $(function () {
-    var maze = generateMaze(20, 18);
+    var maze = generateMaze(null, 'A maze', 15, 15);
 
     var $main = $('#maze-container');
     loadAssets(function () {
