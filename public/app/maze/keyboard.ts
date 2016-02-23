@@ -1,3 +1,5 @@
+'use strict';
+
 const Debug = true;
 
 export enum KeyCode {

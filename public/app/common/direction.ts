@@ -1,3 +1,5 @@
+'use strict';
+
 import {Vector2D} from './vector-2d';
 import {Utils} from './utils';
 

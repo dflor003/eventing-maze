@@ -1,3 +1,5 @@
+'use strict';
+
 import {Args, Utils} from './utils';
 
 export class Vector2D {

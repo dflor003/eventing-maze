@@ -1,8 +1,8 @@
 'use strict';
-import {Maze} from '../public/app/models/maze';
+import {Maze} from '../public/app/maze/models/maze';
 import {Request, Response} from 'express';
 import {Utils} from '../public/app/common/utils';
-import {generateMaze} from '../public/app/maze-generator';
+import {generateMaze} from '../public/app/maze/maze-generator';
 import {IdGenerator} from '../public/app/common/utils';
 
 export class MazeStorage {

@@ -1,7 +1,9 @@
+'use strict';
+
 import Container = PIXI.Container;
 import DisplayObject = PIXI.DisplayObject;
 
-import {Utils} from './common/utils';
+import {Utils} from '../common/utils';
 
 export interface IDynamic {
     update?: () => void;

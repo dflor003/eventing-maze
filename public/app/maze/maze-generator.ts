@@ -1,6 +1,8 @@
 'use strict';
-import {Maze, MazeCell} from './models/maze';
-import {Utils} from './common/utils';
+
+import {Maze} from './models/maze';
+import {MazeCell} from './models/maze-cell';
+import {Utils} from '../common/utils';
 
 export function generateMaze(id: string, name: string, width: number, height: number): Maze {
     const MergeHorizontalChance = 0.50;

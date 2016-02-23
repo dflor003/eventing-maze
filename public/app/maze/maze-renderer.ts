@@ -1,4 +1,5 @@
-/// <reference path="../libs.d.ts" />
+/// <reference path="../../libs.d.ts" />
+'use strict';
 
 import Container = PIXI.Container;
 import Graphics = PIXI.Graphics;
@@ -14,8 +15,8 @@ import {Maze} from './models/maze';
 import {PlayerView} from './views/player-view';
 import {MazeView} from './views/maze-view';
 import {InputManager} from './keyboard';
-import {EventBus} from './common/event-bus';
-import {Direction} from './common/direction';
+import {EventBus} from '../common/event-bus';
+import {Direction} from '../common/direction';
 
 export function loadAssets(done: () => void): void {
     PIXI.loader

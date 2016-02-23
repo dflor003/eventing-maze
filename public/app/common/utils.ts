@@ -1,3 +1,5 @@
+'use strict';
+
 export class Utils {
     static ShowDebug = true;
     static ShowLog = true;

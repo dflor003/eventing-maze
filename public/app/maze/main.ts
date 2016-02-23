@@ -1,3 +1,5 @@
+'use strict';
+
 import {generateMaze} from './maze-generator';
 import {loadAssets, renderMaze} from './maze-renderer';
 

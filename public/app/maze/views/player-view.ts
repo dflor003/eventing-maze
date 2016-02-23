@@ -1,11 +1,13 @@
+'use strict';
+
 import Container = PIXI.Container;
 import Rectangle = PIXI.Rectangle;
 import Sprite = PIXI.Sprite;
 import {MazeView} from './maze-view';
-import {Direction} from '../common/direction';
-import {Vector2D} from '../common/vector-2d';
-import {EventBus} from '../common/event-bus';
-import {Utils} from '../common/utils';
+import {Direction} from '../../common/direction';
+import {Vector2D} from '../../common/vector-2d';
+import {EventBus} from '../../common/event-bus';
+import {Utils} from '../../common/utils';
 
 let TextureCache = PIXI.utils.TextureCache;
 

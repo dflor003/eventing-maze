@@ -31,7 +31,7 @@ function start(workingDir?: string): void {
     app.use(express.static(path.join(workingDir, 'public')));
 
     // JS Bundle
-    app.get('/bundles/app.js', browserify(path.join(workingDir, 'public/app/main.js'), {
+    app.get('/bundles/app.js', browserify(path.join(workingDir, 'public/app/maze/main.js'), {
         transform: [
             ['babelify', {presets: ['es2015']}]
         ]
