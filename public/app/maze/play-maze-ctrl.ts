@@ -43,8 +43,9 @@ export class PlayMazeCtrl {
             templateUrl: 'qr-modal.html',
             size: 'lg',
             controllerAs: '$modal',
-            controller() {
+            controller($uibModalInstance: any) {
                 this.url = mazeUrl;
+                this.done = () => $uibModalInstance.dismiss('cancel');
             }
         })
     }
