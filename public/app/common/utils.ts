@@ -20,6 +20,12 @@ export class Utils {
         }
     }
 
+    static error(...args: any[]) {
+        if (console && typeof console.error === 'function') {
+            console.error.apply(console, arguments);
+        }
+    }
+
     static clamp(value: number, min: number, max: number): number {
         if (value <= min) {
             return min;

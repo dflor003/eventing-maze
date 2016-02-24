@@ -8,7 +8,9 @@ import * as http from 'http';
 import {Request, Response} from 'express';
 import * as browserify from 'browserify-middleware';
 import * as bodyParser from 'body-parser';
-import {MazeController} from "./maze-controller";
+import {MazeController} from './maze-controller';
+import * as socketIo from 'socket.io';
+import {SocketEmitter} from './socket-emitter';
 
 function start(workingDir?: string): void {
     // Setup
@@ -32,11 +34,6 @@ function start(workingDir?: string): void {
     app.use(express.static(path.join(workingDir, 'public'), { etag: true }));
 
     // JS Bundles
-    //app.get('/bundles/maze.js', browserify(path.join(workingDir, 'public/app/maze/main.js'), {
-    //    transform: [
-    //        ['babelify', {presets: ['es2015']}]
-    //    ]
-    //}));
     app.get('/bundles/app.js', browserify(path.join(workingDir, 'public/app/app.js'), {
         transform: [
             ['babelify', {presets: ['es2015']}]
@@ -50,6 +47,7 @@ function start(workingDir?: string): void {
     app.get('/api/mazes/:id', (req: Request, res: Response, next: Function) => mazeController.getMaze(req, res, next));
     app.get('/api/mazes', (req: Request, res: Response, next: Function) => mazeController.getAll(req, res, next));
     app.post('/api/mazes', (req: Request, res: Response, next: Function) => mazeController.newMaze(req, res, next));
+    app.post('/api/mazes/:id/moves', (req: Request, res: Response, next: Function) => mazeController.moveInMaze(req, res, next));
 
     // Error handlers
     app.use((req: Request, res: Response, next: Function) => {
@@ -105,5 +103,8 @@ function start(workingDir?: string): void {
                 : 'port ' + addr.port;
         debug('Listening on ' + bind);
     });
+
+    let io = socketIo.listen(server);
+    SocketEmitter.instance.init(io);
 }
 start(path.join(__dirname, '../'));

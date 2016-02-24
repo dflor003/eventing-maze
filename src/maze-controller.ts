@@ -1,9 +1,12 @@
 'use strict';
+
+import {Direction} from '../public/app/common/direction';
 import {Maze} from '../public/app/maze/models/maze';
 import {Request, Response} from 'express';
 import {Utils} from '../public/app/common/utils';
 import {generateMaze} from '../public/app/maze/maze-generator';
 import {IdGenerator} from '../public/app/common/utils';
+import {SocketEmitter} from './socket-emitter';
 
 export class MazeStorage {
     private mazes: {[key:string]: Maze} = {};
@@ -64,13 +67,43 @@ export class MazeController {
 
     getMaze(req: Request, res: Response, next: Function): void {
         let id = req.param('id');
-        if (!id || !this.storage.exists(id)){
+        if (!id) {
+            res.sendStatus(400);
+            return;
+        }
+        if (!this.storage.exists(id)){
             res.sendStatus(404);
             return;
         }
 
         let maze = this.storage.get(id);
         res.json(maze.toData());
+    }
+
+    moveInMaze(req: Request, res: Response, next: Function): void {
+        let id = req.param('id');
+        if (!id) {
+            res.sendStatus(400);
+            return;
+        }
+        if (!this.storage.exists(id)){
+            res.sendStatus(404);
+            return;
+        }
+
+        let body = req.body || {},
+            directionName = body.direction;
+
+        if (!directionName) {
+            res.status(400).json({
+                message: `Missing 'direction' from body`
+            });
+            return;
+        }
+
+        let direction = Direction.fromName(directionName);
+        SocketEmitter.instance.broadcast(id, 'move', { direction: direction.name() });
+        res.sendStatus(204);
     }
 
     private getMazeId(): string {
