@@ -28,6 +28,7 @@
     "bootswatch-dist": "sandstone",
     "angular-qr": "~0.2.0",
     "font-awesome": "~4.5.0",
-    "angular": "~1.5.0"
+    "angular": "~1.5.0",
+    "AngularJS-Toaster": "angularjs-toaster#~1.2.0"
   }
 }

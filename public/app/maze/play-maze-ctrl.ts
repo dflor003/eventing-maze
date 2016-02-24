@@ -10,9 +10,16 @@ export class PlayMazeCtrl {
     private maze: Maze;
     private $uibModal: any;
 
-    constructor(maze: IMazeData, $uibModal: any) {
+    constructor(maze: IMazeData, $uibModal: any, toaster: any) {
         this.$uibModal = $uibModal;
         this.maze = new Maze(maze);
+
+        EventBus.instance.on('move', evt => {
+            toaster.pop({
+                body: `Move ${evt.direction.name()} (${evt.player || 'Local'})`
+            })
+        });
+
         this.init();
     }
 
