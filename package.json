@@ -4,6 +4,11 @@
   "description": "A maze game to play around with some EventSourcing + CQRS.",
   "main": "index.js",
   "scripts": {
+    "setup": "npm install && npm run bower && npm run typings && npm run build",
+    "clean": "gulp clean",
+    "build": "gulp default",
+    "bower": "gulp bower",
+    "typings": "gulp typings",
     "start": "node --harmony_rest_parameters ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +28,15 @@
     "socket.io": "^1.4.5"
   },
   "author": "Danil Flores <dflor003@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "bluebird": "^2.10.2",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-bower": "0.0.13",
+    "gulp-tsd": "^0.1.0",
+    "gulp-typescript": "^2.12.0",
+    "gulp-util": "^3.0.7",
+    "run-sequence": "^1.1.5"
+  }
 }

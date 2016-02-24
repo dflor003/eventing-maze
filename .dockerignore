@@ -1,0 +1,16 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Node Dependencies
+/node_modules
+
+# Bower Dependencies
+public/lib
+
