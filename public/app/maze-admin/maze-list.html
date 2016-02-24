@@ -10,7 +10,11 @@
                 </p>
 
                 <div class="list-group" ng-if="ctrl.mazes.length">
-                    <a href="#/mazes/{{maze.id}}" class="list-group-item" ng-repeat="maze in ctrl.mazes">
+                    <a href="#/m/{{maze.id}}" class="list-group-item visible-xs" ng-repeat="maze in ctrl.mazes">
+                        <strong>{{maze.name}}</strong>
+                        <small>{{maze.width}} &times; {{maze.height}}</small>
+                    </a>
+                    <a href="#/mazes/{{maze.id}}" class="list-group-item hidden-xs" ng-repeat="maze in ctrl.mazes">
                         <strong>{{maze.name}}</strong>
                         <small>{{maze.width}} &times; {{maze.height}}</small>
                     </a>

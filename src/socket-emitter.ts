@@ -45,14 +45,19 @@ export class SocketEmitter {
 
         socket
             .on('join-maze', mazeId => {
-                if (!mazeId) throw new Error(`User ${ipAddress} tried to join maze but did not pass id`);
+                if (!mazeId) {
+                    throw new Error(`User ${ipAddress} tried to join maze but did not pass id`);
+                }
+
                 Utils.log(`User ${ipAddress} joined maze ${mazeId}`)
                 socket.join(mazeId);
-            });
-
-        socket
+            })
             .on('disconnect', () => {
                 let user = this.users[ipAddress];
+                if (!user) {
+                    return;
+                }
+
                 user.dispose();
                 delete this.users[ipAddress];
                 Utils.log(`User ${ipAddress} disconnected.`);

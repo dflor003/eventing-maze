@@ -27,6 +27,12 @@ export class MazeService {
         return this.$http.get<IMazeData[]>('/api/mazes')
             .then(x => x.data);
     }
+
+    move(mazeId: string, direction: string): ng.IPromise<any> {
+        return this.$http.post(`/api/mazes/${mazeId}/moves`, {
+            direction: direction
+        }).then(x => x.data);
+    }
 }
 
 angular.module('app.mazeAdmin').service('mazeService', MazeService);
