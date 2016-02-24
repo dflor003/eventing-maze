@@ -19,11 +19,15 @@ import {EventBus} from '../common/event-bus';
 import {Direction} from '../common/direction';
 
 export function loadAssets(done: () => void): void {
-    PIXI.loader
-        .add([
-            'assets/player.png'
-        ])
-        .load(done);
+    if (PIXI.utils.TextureCache['assets/player.png']) {
+        done();
+    } else {
+        PIXI.loader
+            .add([
+                'assets/player.png'
+            ])
+            .load(done);
+    }
 }
 
 export function renderMaze(maze: Maze): GameManager {

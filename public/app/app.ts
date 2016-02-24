@@ -3,7 +3,7 @@ require('./maze-admin/module');
 require('./maze-control/module');
 require('./maze/module');
 
-let module = angular.module('app', ['ngRoute', 'app.mazeAdmin', 'app.maze', 'app.mazeControl']);
+let module = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ja.qr', 'app.mazeAdmin', 'app.maze', 'app.mazeControl']);
 
 module
     .config(['$routeProvider', ($routeProvider: ng.route.IRouteProvider) => {

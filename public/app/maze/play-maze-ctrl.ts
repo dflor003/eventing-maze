@@ -8,8 +8,10 @@ import {Utils} from '../common/utils';
 
 export class PlayMazeCtrl {
     private maze: Maze;
+    private $uibModal: any;
 
-    constructor(maze: IMazeData) {
+    constructor(maze: IMazeData, $uibModal: any) {
+        this.$uibModal = $uibModal;
         this.maze = new Maze(maze);
         this.init();
     }
@@ -32,6 +34,26 @@ export class PlayMazeCtrl {
                 let direction = Direction.fromName(directionName);
                 EventBus.instance.emit('move', {direction: direction});
             });
+    }
+
+    showJoinCode(): void {
+        let mazeUrl = this.getUrl();
+
+        this.$uibModal.open({
+            templateUrl: 'qr-modal.html',
+            size: 'lg',
+            controllerAs: '$modal',
+            controller() {
+                this.url = mazeUrl;
+            }
+        })
+    }
+
+    private getUrl(): string {
+        let mazeId = this.maze.id,
+            scheme = window.location.protocol,
+            host = window.location.host;
+        return `${scheme}//${host}/#/m/${mazeId}`;
     }
 }
 

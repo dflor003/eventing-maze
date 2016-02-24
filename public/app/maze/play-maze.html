@@ -1,8 +1,38 @@
-
-<div id="main" class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-        <div id="maze-container" class="col-md-12 text-center">
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary btn-md" ng-click="ctrl.showJoinCode()">
+                <!--<span class="glyphicon glyphicon-qrcode"></span>-->
+                <i class="fa fa-qrcode fa-3x"></i>
+            </button>
+        </div>
+        <div id="maze-container" class="col-md-10 text-center">
             <maze-renderer maze="ctrl.maze"></maze-renderer>
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="qr-modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Join from a mobile device</h3>
+    </div>
+    <div class="modal-body">
+        <p class="text-center">To join this maze and control it from your mobile device, do one of the following:</p>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <p>Scan this QR code:</p>
+                <qr text="$modal.url"></qr>
+            </div>
+            <div class="col-md-1">
+                OR
+            </div>
+            <div class="col-md-5">
+                <p>Navigate to this URL:</p>
+                <a href="{{$modal.url}}" target="_blank">{{$modal.url}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-block" type="button" ng-click="ok()">Done</button>
+    </div>
+</script>

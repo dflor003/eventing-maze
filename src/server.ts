@@ -1,4 +1,5 @@
 'use strict';
+import {Utils} from '../public/app/common/utils';
 import * as express from 'express';
 import * as favicon from 'serve-favicon';
 import * as path from 'path';
@@ -15,7 +16,7 @@ import {SocketEmitter} from './socket-emitter';
 function start(workingDir?: string): void {
     // Setup
     let app = express(),
-        serverPort = 3000;
+        serverPort = process.env.EVTMAZE_PORT || 3000;
     workingDir = workingDir || __dirname;
 
     // View Engine setup
@@ -105,6 +106,7 @@ function start(workingDir?: string): void {
     });
 
     let io = socketIo.listen(server);
+    io.on('error', err => Utils.error(err));
     SocketEmitter.instance.init(io);
 }
 start(path.join(__dirname, '../'));
