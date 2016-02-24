@@ -1,7 +1,7 @@
 FROM node:5.3
 
 # Environment variables
-ENV EVTMAZE_PORT "3001"
+ENV EVTMAZE_PORT "3000"
 
 # Copy over to its destination
 COPY . /opt/event-maze
@@ -11,5 +11,5 @@ WORKDIR /opt/event-maze
 RUN npm run setup
 
 # Main command
-EXPOSE 3001
+EXPOSE 3000
 CMD npm start
