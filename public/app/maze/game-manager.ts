@@ -22,6 +22,10 @@ export class GameManager {
         this.run = this.run.bind(this);
     }
 
+    get canvas(): HTMLCanvasElement {
+        return this.renderer.view;
+    }
+
     start(): void {
         Utils.log('Game loop starting');
         this.isRunning = true;

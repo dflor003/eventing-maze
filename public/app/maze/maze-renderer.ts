@@ -26,17 +26,7 @@ export function loadAssets(done: () => void): void {
         .load(done);
 }
 
-export function renderMaze(element: HTMLElement, maze: Maze): GameManager {
-    // Setup and configure the PIXI renderer
-    let $element = $(element),
-        width = $element.width(),
-        height = $element.height(),
-        renderer = PIXI.autoDetectRenderer(width, height, { antialias: true, transparent: true, resolution: 1 });
-
-    renderer.autoResize = true;
-    renderer.backgroundColor = 0xFFF;
-    $element.append(renderer.view);
-
+export function renderMaze(maze: Maze): GameManager {
     let scene = new Container(),
         mazeView = new MazeView(maze),
         player = new PlayerView(mazeView);
@@ -48,6 +38,13 @@ export function renderMaze(element: HTMLElement, maze: Maze): GameManager {
     InputManager.instance.bind(KeyCode.DownArrow).release(() => EventBus.instance.emit('move', { direction: Direction.Down }));
     InputManager.instance.bind(KeyCode.LeftArrow).release(() => EventBus.instance.emit('move', { direction: Direction.Left }));
     InputManager.instance.bind(KeyCode.RightArrow).release(() => EventBus.instance.emit('move', { direction: Direction.Right }));
+
+    // Setup and configure the PIXI renderer
+    let width = scene.width,
+        height = scene.height,
+        renderer = PIXI.autoDetectRenderer(width, height, { antialias: true, transparent: true, resolution: 1 });
+    renderer.autoResize = true;
+    renderer.backgroundColor = 0xFFF;
 
     return new GameManager(renderer, scene);
 }

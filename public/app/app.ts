@@ -1,7 +1,8 @@
 import {MazeService} from './maze-admin/maze-service';
 require('./maze-admin/module');
+require('./maze/module');
 
-let module = angular.module('app', ['app.mazeAdmin', 'ngRoute']);
+let module = angular.module('app', ['ngRoute', 'app.mazeAdmin', 'app.maze']);
 
 module
     .config(['$routeProvider', ($routeProvider: ng.route.IRouteProvider) => {
@@ -22,7 +23,7 @@ module
                 controllerAs: 'ctrl',
             })
             .when('/mazes/:mazeId', {
-                templateUrl: 'app/maze-admin/play-maze.html',
+                templateUrl: 'app/maze/play-maze.html',
                 controller: 'playMazeCtrl',
                 controllerAs: 'ctrl',
                 resolve: {

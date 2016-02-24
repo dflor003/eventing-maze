@@ -9,7 +9,6 @@ export class MazeListCtrl {
     mazes: IMazeData[];
 
     constructor(mazes: IMazeData[], mazeService: MazeService) {
-        console.log(mazes);
         this.mazeService = mazeService;
         this.mazes = mazes;
     }
