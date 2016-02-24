@@ -102,8 +102,9 @@ export class MazeController {
         }
 
         let direction = Direction.fromName(directionName);
+        console.log(req.ip);
         SocketEmitter.instance.broadcast(id, 'move', {
-            player: req.ip,
+            player: req.connection.remoteAddress,
             direction: direction.name()
         });
         res.sendStatus(204);

@@ -10,14 +10,16 @@ export class PlayMazeCtrl {
     private maze: Maze;
     private $uibModal: any;
 
-    constructor(maze: IMazeData, $uibModal: any, toaster: any) {
+    constructor(maze: IMazeData, $uibModal: any, toaster: any, $timeout: any) {
         this.$uibModal = $uibModal;
         this.maze = new Maze(maze);
 
         EventBus.instance.on('move', evt => {
-            toaster.pop({
-                body: `Move ${evt.direction.name()} (${evt.player || 'Local'})`
-            })
+            $timeout(() => {
+                toaster.pop({
+                    body: `Move ${evt.direction.name()} (${evt.player || 'Local'})`
+                })
+            }, 0);
         });
 
         this.init();
@@ -39,7 +41,10 @@ export class PlayMazeCtrl {
                 }
 
                 let direction = Direction.fromName(directionName);
-                EventBus.instance.emit('move', {direction: direction});
+                EventBus.instance.emit('move', {
+                    player: data.player,
+                    direction: direction
+                });
             });
     }
 
