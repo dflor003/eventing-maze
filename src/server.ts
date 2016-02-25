@@ -1,30 +1,34 @@
 'use strict';
-import {Utils} from '../public/app/common/utils';
+
 import * as express from 'express';
 import * as favicon from 'serve-favicon';
 import * as path from 'path';
 import * as logger from 'morgan';
 import * as debug from 'debug';
 import * as http from 'http';
-import {Request, Response} from 'express';
 import * as browserify from 'browserify-middleware';
 import * as bodyParser from 'body-parser';
-import {MazeController} from './maze-controller';
 import * as socketIo from 'socket.io';
+import * as uuid from 'node-uuid';
+import {Request, Response} from 'express';
+import {Utils} from '../public/app/common/utils';
+import {MazeApi} from './maze-controller';
 import {SocketEmitter} from './socket-emitter';
+import {NotFoundError} from './errors/http-errors';
 
 function start(workingDir?: string): void {
+    workingDir = workingDir || __dirname;
     // Setup
     let app = express(),
-        serverPort = process.env.EVTMAZE_PORT || 3000;
-    workingDir = workingDir || __dirname;
+        serverPort = process.env.EVTMAZE_PORT || 3000,
+        publicUrl = process.env.EVTMAZE_PUBLIC_URL || `http://localhost:${serverPort}/`
 
     // View Engine setup
     app.set('views', path.join(workingDir, 'views'));
     app.set('view engine', 'jade');
 
     // Configuration
-    app.disable('etag');
+    app.disable('etag'); // Disables etags for JSON requests
     app.use(favicon(workingDir + '/public/assets/favicon.ico'));
     app.use(logger('dev'));
     app.use(require('less-middleware')(path.join(workingDir, 'public'), {
@@ -41,26 +45,27 @@ function start(workingDir?: string): void {
         ]
     }));
 
-    // Routes
+    // Main SPA route
     app.get('/', (req: Request, res: Response) => res.render('layout', {}));
 
-    let mazeController = new MazeController();
-    app.get('/api/mazes/:id', (req: Request, res: Response, next: Function) => mazeController.getMaze(req, res, next));
-    app.get('/api/mazes', (req: Request, res: Response, next: Function) => mazeController.getAll(req, res, next));
-    app.post('/api/mazes', (req: Request, res: Response, next: Function) => mazeController.newMaze(req, res, next));
-    app.post('/api/mazes/:id/moves', (req: Request, res: Response, next: Function) => mazeController.moveInMaze(req, res, next));
+    // APIs
+    let apis = [
+        new MazeApi()
+    ];
+    apis.forEach(api => app.use(api.routes()));
 
     // Error handlers
     app.use((req: Request, res: Response, next: Function) => {
         var message = `Could not find resource: ${req.url}`,
-            err = new Error(message);
-        err['status'] = 404;
+            err = new NotFoundError(message);
         next(err);
     });
 
     app.use((err: Error, req: Request, res: Response) => {
+        let errorId =  uuid.v4();
         res.status(err['status'] || 500);
         res.render('error', {
+            id: errorId,
             message: err.message,
             error: err
         });
@@ -85,11 +90,11 @@ function start(workingDir?: string): void {
         // Handle specific listen errors with friendly messages
         switch (error.code) {
             case 'EACCES':
-                console.error(bind + ' requires elevated privileges');
+                Utils.error(bind + ' requires elevated privileges');
                 process.exit(1);
                 break;
             case 'EADDRINUSE':
-                console.error(bind + ' is already in use');
+                Utils.error(bind + ' is already in use');
                 process.exit(1);
                 break;
             default:

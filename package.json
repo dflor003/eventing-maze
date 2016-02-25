@@ -9,7 +9,7 @@
     "build": "gulp default",
     "bower": "gulp bower",
     "typings": "gulp typings",
-    "start": "node --harmony_rest_parameters ./src/server.js",
+    "start": "node --harmony --harmony_rest_parameters ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "jade": "^1.11.0",
     "less-middleware": "^2.0.1",
     "morgan": "^1.6.1",
+    "node-uuid": "^1.4.7",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.4.5"
   },

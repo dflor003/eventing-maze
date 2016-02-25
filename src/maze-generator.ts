@@ -1,12 +1,10 @@
 'use strict';
 
-import {Maze} from './models/maze';
-import {MazeCell} from './models/maze-cell';
-import {Utils} from '../common/utils';
+import {Maze} from './../public/app/maze/models/maze';
+import {MazeCell} from './../public/app/maze/models/maze-cell';
+import {Utils} from '../public/app/common/utils';
 
 export function generateMaze(id: string, name: string, width: number, height: number): Maze {
-    const MergeHorizontalChance = 0.50;
-    const MergeVerticalChance = 0.3;
     let maze = new Maze({
         id: id,
         name: name,
@@ -15,6 +13,8 @@ export function generateMaze(id: string, name: string, width: number, height: nu
     });
 
     // Iterate every row but the last
+    const MergeHorizontalChance = 0.50;
+    const MergeVerticalChance = 0.3;
     for (let row = 0; row < height - 1; row++) {
         // Capture distinct cells and each cell by set
         let distinctSets = [];

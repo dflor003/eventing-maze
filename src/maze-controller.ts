@@ -1,12 +1,14 @@
 'use strict';
 
+import * as express from 'express';
 import {Direction} from '../public/app/common/direction';
 import {Maze} from '../public/app/maze/models/maze';
 import {Request, Response} from 'express';
 import {Utils} from '../public/app/common/utils';
-import {generateMaze} from '../public/app/maze/maze-generator';
+import {generateMaze} from './maze-generator';
 import {IdGenerator} from '../public/app/common/utils';
 import {SocketEmitter} from './socket-emitter';
+import {Router} from 'express';
 
 export class MazeStorage {
     private mazes: {[key:string]: Maze} = {};
@@ -35,10 +37,21 @@ export class MazeStorage {
     }
 }
 
-export class MazeController {
+export class MazeApi {
     private storage = new MazeStorage();
 
-    newMaze(req: Request, res: Response, next: Function): void {
+    routes(): Router {
+        let router = express.Router();
+
+        router.get('/api/mazes', (req, res, next) => this.getAll(req, res, next));
+        router.post('/api/mazes', (req, res: Response, next) => this.newMaze(req, res, next));
+        router.get('/api/mazes/:id', (req, res, next) => this.getMaze(req, res, next));
+        router.post('/api/mazes/:id/moves', (req, res, next) => this.moveInMaze(req, res, next));
+
+        return router;
+    }
+
+    newMaze(req: Request, res: Response, next: Function): any {
         if (!req.body) {
             res.sendStatus(400);
             return;
@@ -102,7 +115,6 @@ export class MazeController {
         }
 
         let direction = Direction.fromName(directionName);
-        console.log(req.ip);
         SocketEmitter.instance.broadcast(id, 'move', {
             player: req.connection.remoteAddress,
             direction: direction.name()

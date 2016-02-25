@@ -13,3 +13,6 @@
 /// <reference path="angularjs/angular-route.d.ts" />
 /// <reference path="socket.io-client/socket.io-client.d.ts" />
 /// <reference path="socket.io/socket.io.d.ts" />
+/// <reference path="node-uuid/node-uuid-base.d.ts" />
+/// <reference path="node-uuid/node-uuid-cjs.d.ts" />
+/// <reference path="node-uuid/node-uuid.d.ts" />
